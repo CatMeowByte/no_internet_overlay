@@ -36,7 +36,7 @@ To run `no_internet_overlay` at startup, follow these steps:
    [Desktop Entry]
    Type=Application
    Name=No Internet Overlay
-   Exec=python /path/to/no_internet_overlay --timeout=15 --refresh=30 --bg-color=yellow --bg-alpha=0.5 --fg-alpha=0.8 --blink
+   Exec=/path/to/no_internet_overlay --timeout=15 --refresh=30 --bg-color=yellow --bg-alpha=0.5 --fg-alpha=0.8 --blink
    Terminal=false
    ```
 
