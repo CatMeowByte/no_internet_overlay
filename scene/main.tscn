@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://be3lxbcm2n7hc"]
+[gd_scene load_steps=6 format=3 uid="uid://be3lxbcm2n7hc"]
 
 [ext_resource type="Script" path="res://script/nonet.gd" id="1_enp06"]
-[ext_resource type="Texture2D" uid="uid://cplv1vn05vuaf" path="res://image/icon/wifi-off-custom.png" id="2_de0sw"]
+[ext_resource type="FontFile" uid="uid://bns1pbsky5csg" path="res://font/font-wifi-off-0.ttf" id="2_kcbng"]
 [ext_resource type="FontFile" uid="uid://drgbasabdvfq" path="res://font/BebasNeue-Regular.ttf" id="3_5tr7i"]
+
+[sub_resource type="FontVariation" id="FontVariation_qsx00"]
+base_font = ExtResource("2_kcbng")
 
 [sub_resource type="FontVariation" id="FontVariation_0wfnp"]
 base_font = ExtResource("3_5tr7i")
@@ -16,39 +19,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_enp06")
-nodepath_background = NodePath("ColorRect")
-nodepath_foreground = NodePath("CenterContainer/VBoxContainer")
+nodepath_overlay = NodePath("Overlay")
+nodepath_background = NodePath("Overlay/Background")
+nodepath_foreground = NodePath("Overlay/Center/VBox")
 nodepath_blink = NodePath("Blink")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Overlay" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Overlay"]
 modulate = Color(0.337255, 0.423529, 0.52549, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Center" type="CenterContainer" parent="Overlay"]
+layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBox" type="VBoxContainer" parent="Overlay/Center"]
 modulate = Color(0.956863, 0.956863, 0.956863, 1)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(128, 128)
+[node name="Icon" type="Label" parent="Overlay/Center/VBox"]
 layout_mode = 2
-texture = ExtResource("2_de0sw")
-expand_mode = 1
-stretch_mode = 5
+theme_override_fonts/font = SubResource("FontVariation_qsx00")
+theme_override_font_sizes/font_size = 128
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="Text" type="Label" parent="Overlay/Center/VBox"]
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontVariation_0wfnp")
 theme_override_font_sizes/font_size = 32

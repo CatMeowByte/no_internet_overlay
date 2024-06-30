@@ -10,9 +10,11 @@ const BG_COLOR: Dictionary = {
 }
 
 @export_group("Node", "nodepath_")
+@export_node_path("CanvasItem") var nodepath_overlay: NodePath
 @export_node_path("CanvasItem") var nodepath_background: NodePath
 @export_node_path("CanvasItem") var nodepath_foreground: NodePath
 @export_node_path("Timer") var nodepath_blink: NodePath
+@onready var node_overlay: CanvasItem = get_node(nodepath_overlay) as CanvasItem
 @onready var node_background: CanvasItem = get_node(nodepath_background) as CanvasItem
 @onready var node_foreground: CanvasItem = get_node(nodepath_foreground) as CanvasItem
 @onready var node_blink: Timer = get_node(nodepath_blink) as Timer
@@ -36,7 +38,7 @@ func _ready():
 
 	# Setup
 	get_window().mouse_passthrough = true
-	modulate.a = 0.0
+	node_overlay.modulate.a = 0.0
 
 	# Get
 	var arguments: Dictionary = {}
@@ -140,15 +142,15 @@ func print_info(verbose: bool = false):
 
 
 func request_completed(result, _response_code, _headers, _body):
-	is_online = false
+	is_online = true
 	if not result == HTTPRequest.RESULT_SUCCESS:
-		is_online = true
+		is_online = false
 		if blink:
 			node_blink.start()
 		printerr("Not connected to internet.")
 
 	# Fade
-	get_tree().create_tween().tween_property(self, "modulate:a", float(is_online), 0.5)
+	get_tree().create_tween().tween_property(node_overlay, "modulate:a", float(not is_online), 0.5)
 
 	# Ping again
 	await get_tree().create_timer(ping_delay).timeout
